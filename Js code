@@ -1,0 +1,20 @@
+import { LightningElement ,track,wire} from 'lwc';
+import { getRecord } from 'lightning/uiRecordApi';
+import User_ID from '@Salesforce/User/ID' ;
+import NAME_FIELD from '@salesforce/schema/User.Name';
+
+export default class CreateLeadForm extends LightningElement {
+    @track senderName ;
+
+    @wire (getRecord,{recordID: User_ID, Fields:[NAME_FIELD]})
+    userData( {data , error }){
+        if(data){
+            this.senderName= data.fields.Name.Value;
+        }
+        else if(error){
+            this.senderName = 'Unknown User';
+        }
+    }
+    
+    
+}
