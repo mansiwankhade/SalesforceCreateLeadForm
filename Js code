@@ -1,20 +1,29 @@
-import { LightningElement ,track,wire} from 'lwc';
-import { getRecord } from 'lightning/uiRecordApi';
-import User_ID from '@Salesforce/User/ID' ;
+import { LightningElement, track, wire } from 'lwc';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import USER_ID from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class CreateLeadForm extends LightningElement {
-    @track senderName ;
+    @track senderName;
 
-    @wire (getRecord,{recordID: User_ID, Fields:[NAME_FIELD]})
-    userData( {data , error }){
-        if(data){
-            this.senderName= data.fields.Name.Value;
-        }
-        else if(error){
-            this.senderName = 'Unknown User';
+    @wire (getRecord,{recordID: USER_ID, fields:[NAME_FIELD]})
+    record;
+    get senderName(){
+        return this.record.data ? getFieldValue(this.record.data, NAME_FIELD) : '';
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const fields=event.detail.fields;
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
+    }
+     handleCancel(){
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        if(inputFields){
+            inputFields.forEach(field => {
+                field.reset();
+            });
         }
     }
-    
-    
 }
