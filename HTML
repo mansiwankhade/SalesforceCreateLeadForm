@@ -1,24 +1,16 @@
-
 <template>
-   <div>
+    <div>
     <lightning-card >
-        <lightning-record-edit-form  object-api-name="LeadForm__c" >
-
-    
-    <lightning-input-field field-name="Sender_Name__c" value={senderName} ></lightning-input-field>
-    <lightning-input-field field-name="Assisted_By__c" value={assistedBy} ></lightning-input-field>
-    <lightning-input-field field-name="Line_of_Business__c" value={lineOfBusiness}></lightning-input-field>
-    <lightning-input-field field-name="Received_By__c" value={receivedBy} ></lightning-input-field>
-    <div class="slds-grid slds-grid_align-end">
-        <lightning-button class="slds-m-right_small"  label="Cancel" onclick={handleCancel}> </lightning-button>
-        <lightning-button class="slds-m-right_small"  label="Submit" type="submit"> </lightning-button>
-    </div>
-   
+        <lightning-record-edit-form  object-api-name="Lead"}>
+            <lightning-input-field field-name="Sender_Name__c" value={senderName} ></lightning-input-field>
+            <lightning-input-field field-name="Assisted_By__c" ></lightning-input-field>
+            <lightning-input-field field-name="Line_of_Business__c" ></lightning-input-field>
+            <lightning-input-field field-name="Received_By__c" ></lightning-input-field>
+            <div class="slds-grid slds-grid_align-end">
+                <lightning-button class="slds-m-right_small"  type="button" label="Cancel" onclick={handleCancel}> </lightning-button>
+                <lightning-button class="slds-m-right_small"  type="submit" label="Submit" onclick={handleSubmit}></lightning-button>
+            </div>
         </lightning-record-edit-form>
     </lightning-card >
-
     </div>
-   
-
-    
 </template>
