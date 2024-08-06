@@ -2,7 +2,7 @@ import { LightningElement, track} from 'lwc';
 import LEAD_OBJECT from '@salesforce/schema/Lead';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import { createRecord } from 'lightning/uiRecordApi';
-
+import getUserContact from '@salesforce/apex/userContact.getUserContact';
 
 
 export default class CreateLeadForm extends LightningElement {
@@ -16,6 +16,23 @@ export default class CreateLeadForm extends LightningElement {
         Line_of_Business: '',
         Received_By: ''
     };
+ connectedCallback() {
+        this.fetchUserContact();
+    }
+
+    fetchUserContact() {
+        getUserContact()
+            .then(result => {
+                this.leadDetails.Sender_Name = result;
+             
+
+            })
+            .catch(error => {
+                this.hasError = true;
+                this.errorMessage = error.body.message;
+            });
+    }
+
     senderNameHandler(event){
         this.leadDetails.Sender_Name = event.target.value;
     }
